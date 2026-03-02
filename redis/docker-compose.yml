@@ -1,1 +1,22 @@
+services:
+  # Redis 服务主体
+  redis:
+    image: redis:7.2-alpine
+    container_name: redis-server
+    # 使用 ${变量名} 引用 .env 中的内容
+    command: redis-server --requirepass ${REDIS_PASSWORD} --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis-data:/data
+    restart: always
 
+  # Redis Insight 图形化管理界面
+  redis-insight:
+    image: redis/redisinsight:latest
+    container_name: redis-insight
+    ports:
+      - "5540:5540" # 浏览器访问 http://localhost:5540
+    depends_on:
+      - redis
+    restart: always

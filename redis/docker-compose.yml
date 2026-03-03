@@ -41,3 +41,5 @@ services:
 networks:
   redis-net:
     driver: overlay # 使用 Overlay 网络实现跨节点通信
+    driver_opts:
+      com.docker.network.driver.mtu: "1450"

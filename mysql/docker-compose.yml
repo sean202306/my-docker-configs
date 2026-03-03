@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-my_app_db}
+    volumes:
+      # 本地路径现在也使用变量 ${HOST_DATA_PATH}
+      # 如果未指定，则默认存放在 /root/mysql-data
+      - ${HOST_DATA_PATH:-/root/mysql-data}:/var/lib/mysql
+    networks:
+      - mysql-net
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          # 依然支持动态指定运行节点
+          - node.hostname == ${TARGET_NODE:-docker-sean}
+      restart_policy:
+        condition: on-failure
+
+networks:
+  mysql-net:
+    driver: overlay

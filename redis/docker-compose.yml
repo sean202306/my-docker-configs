@@ -10,7 +10,7 @@ services:
       - "6379:6379"
     volumes:
       # 改用绝对路径，确保数据位置受你掌控
-      - /root/redis-data:/data
+      - ${HOST_DATA_PATH:-/root/redis-data}:/data
     networks:
       - redis-net
     deploy:

@@ -1,0 +1,10 @@
+services:
+  portainer-agent:
+    image: portainer/agent:latest
+    container_name: portainer_agent
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # Agent 需要读写 Docker 接口
+      - /var/lib/docker/volumes:/var/lib/docker/volumes # 用于在 UI 中管理卷文件
+    ports:
+      - "9001:9001"

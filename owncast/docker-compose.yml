@@ -1,7 +1,7 @@
 services:
   owncast:
     image: owncast/owncast:latest
-    container_name: owncast
+    container_name: owncast-test
     restart: always
     ports:
       - "1935:1935"   # RTMP 推流端口

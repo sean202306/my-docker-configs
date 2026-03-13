@@ -4,7 +4,7 @@ services:
     container_name: owncast-test
     restart: always
     ports:
-      - "1935:1935"   # RTMP 推流端口
+      - "1936:1935"   # RTMP 推流端口
       - "9080:8080"   # 网页访问 + 管理后台
     volumes:
       - ./data:/app/data # 存放配置、聊天记录和视频缓存

@@ -8,6 +8,7 @@ services:
       - /root/data/docker_data/owncast/data:/app/data
       # 内存盘：Owncast 往这里写
       - /dev/shm/owncast_hls:/app/data/hls
+      - /dev/shm/owncast_tmp:/app/data/tmp
     networks:
       - owncast-net
 

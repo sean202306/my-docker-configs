@@ -16,3 +16,15 @@ net.ipv4.tcp_wmem = 4096 65536 16777216
 
 # 允许重用处于 TIME_WAIT 状态的连接
 net.ipv4.tcp_tw_reuse = 1
+
+
+mkdir -p /root/data/docker_data/owncast/data
+# 确保权限，防止 Owncast 容器内部写入失败
+chmod -R 777 /root/data/docker_data/owncast/data
+
+# 创建挂载点
+mkdir -p /dev/shm/owncast_hls
+mkdir -p /dev/shm/owncast_tmp
+# 赋予最高权限，确保 Owncast 写和 Nginx 读完全畅通
+chmod 777 /dev/shm/owncast_hls
+chmod 777 /dev/shm/owncast_tmp

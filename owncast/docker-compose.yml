@@ -3,18 +3,17 @@ services:
     image: owncast/owncast:latest
     container_name: owncast
     restart: always
-    ports:
-      - "1935:1935"
     volumes:
-      # 沿用你指定的绝对路径
+      # 沿用你的绝对路径存储数据
       - /root/data/docker_data/owncast/data:/app/data
-      # 内存盘绝对路径
+      # 内存盘：Owncast 往这里写
       - /dev/shm/owncast_hls:/app/data/hls
     networks:
       - owncast-net
 
   nginx:
-    image: nginx:alpine
+    # 使用你刚刚推送成功的镜像
+    image: seanmini/nginx-owncast-300p:v1
     container_name: owncast-nginx
     user: "0:0"
     restart: always
@@ -26,9 +25,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      # 关键：这里使用相对路径读取 Git 仓库里的配置文件
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      # 内存盘绝对路径
+      # 唯一需要的挂载：Nginx 从这里读（只读模式）
       - /dev/shm/owncast_hls:/usr/share/nginx/html/hls:ro
     depends_on:
       - owncast
